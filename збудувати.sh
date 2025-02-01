@@ -10,10 +10,12 @@ export TSIL="ціль"
 
 $TSIL розширення_мавки_sqlite.ll скомпілювати розширення_мавки_sqlite.ц
 
-$CC -shared -fPIC \
+if [ ! -f sqlite/sqlite3.o ]; then
+  $CC -shared -fPIC \
      -march=native \
      -o sqlite/sqlite3.o \
      sqlite/sqlite3.c
+fi
 
 $CXX -shared -fPIC \
   -march=native \
