@@ -2,5 +2,13 @@
 
 sqlite = мавка.завантажити_РМв1(ю"./розширення_мавки_sqlite.so")
 
-адреса_бд = sqlite.open(ю"привіт.db")
-друк(адреса_бд)
+db = sqlite.open(ю"привіт.db")
+
+результат = sqlite.exec(db, ю"CREATE TABLE IF NOT EXISTS paks (id INTEGER PRIMARY KEY, name TEXT)")
+друк(результат)
+результат1 = sqlite.exec(db, ю"INSERT INTO paks (id, name) VALUES (1, 'hello')")
+друк(результат1)
+результат2 = sqlite.exec(db, ю"INSERT INTO paks (id, name) VALUES (2, 'intellect')")
+друк(результат2)
+результат3 = sqlite.exec(db, ю"SELECT * from paks")
+друк(результат3)
