@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <memory.h>
-#include "sqlite/sqlite3.h"
+#include "sqlite3/sqlite3.h"
 #include <iostream>
 
 extern "C" void *sqlite_mavka_extension_open(char *path, size_t path_size, char **error, size_t *error_size) {
@@ -76,6 +76,10 @@ extern "C" int sqlite_mavka_extension_bind_int64(void *stmt, int i, long value) 
 
 extern "C" int sqlite_mavka_extension_bind_null(void *stmt, int i) {
     return sqlite3_bind_null((sqlite3_stmt *) stmt, i);
+}
+
+extern "C" int sqlite_mavka_extension_bind_text(void *stmt, int i, char *value, size_t value_size) {
+    return sqlite3_bind_text((sqlite3_stmt *) stmt, i, value, value_size, nullptr);
 }
 
 extern "C" size_t sqlite_mavka_extension_expanded_sql(void *stmt, char **out) {

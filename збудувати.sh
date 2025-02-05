@@ -8,18 +8,18 @@ export AR="llvm-ar"
 export RANLIB="llvm-ranlib"
 export TSIL="ціль"
 
-$TSIL розширення_мавки_sqlite.ll скомпілювати розширення_мавки_sqlite.ц
+$TSIL розширення_мавки_sqlite3.ll скомпілювати розширення_мавки_sqlite3.ц
 
-if [ ! -f sqlite/sqlite3.o ]; then
-  $CC -shared -fPIC \
+if [ ! -f sqlite3/sqlite3.o ]; then
+  $CC -c -fPIC \
      -march=native \
-     -o sqlite/sqlite3.o \
-     sqlite/sqlite3.c
+     -o sqlite3/sqlite3.o \
+     sqlite3/sqlite3.c
 fi
 
 $CXX -shared -fPIC \
   -march=native \
   -std=c++20 \
   -flto \
-  -o розширення_мавки_sqlite.so \
-  розширення_мавки_sqlite.ll sqlite_mavka_extension.cpp sqlite/sqlite3.o
+  -o розширення_мавки_sqlite3.so \
+  розширення_мавки_sqlite3.ll sqlite3_mavka_extension.cpp sqlite3/sqlite3.o
