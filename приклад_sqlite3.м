@@ -4,14 +4,7 @@ sqlite3 = мавка.завантажити_РМв1(ю"./розширення_м
 
 db = sqlite3.open(ю"привіт.db")
 
-результат = sqlite3.exec(db, ю"CREATE TABLE IF NOT EXISTS paks (id INTEGER PRIMARY KEY, name TEXT)")
-друк(результат)
-результат1 = sqlite3.exec(db, ю"INSERT INTO paks (name) VALUES ('привіт')")
-друк(результат1)
-результат2 = sqlite3.exec(db, ю"INSERT INTO paks (name) VALUES ('інтелект')")
-друк(результат2)
-результат3 = sqlite3.exec(db, ю"SELECT * from paks")
-друк(результат3)
-prepared = sqlite3.prepare_v2(db, ю"SELECT * from paks WHERE id = ?")
-sqlite3.bind_int(prepared, 1, 1)
-друк(sqlite3.expanded_sql(prepared))
+sqlite3.exec(db, ю"CREATE TABLE IF NOT EXISTS paks (id INTEGER PRIMARY KEY, name TEXT)")
+sqlite3.exec(db, ю"INSERT INTO paks (name) VALUES ('привіт')")
+sqlite3.exec(db, ю"INSERT INTO paks (name) VALUES ('інтелект')")
+sqlite3.exec(db, ю"SELECT * from paks", (рядок): друк(рядок))

@@ -2,327 +2,316 @@
 
 структура SqliteExecCallbackData {
   Р: адреса<РМв1::Розширення>;
-  обʼєкт_рядків: адреса<РМв1::Обʼєкт>;
+  callback: адреса<РМв1::Обʼєкт>;
 }
 
-синонім SqliteExecCallback = (data: адреса<SqliteExecCallbackData>, argc: int, argv: памʼять<адреса<char>>, column_names: памʼять<адреса<char>>) -> int;
-зовнішня дія sqlite_mavka_extension_open(path: адреса<char>, path_size: size_t, error_ptr: адреса<памʼять<char>>, error_size_ptr: адреса<size_t>): адреса;
-зовнішня дія sqlite_mavka_extension_close(db: адреса);
-зовнішня дія sqlite_mavka_extension_exec(db: адреса, sql: адреса<char>, sql_size: size_t, callback: SqliteExecCallback, data: адреса<SqliteExecCallbackData>, error_ptr: адреса<адреса<char>>, error_size_ptr: адреса<size_t>): int;
-зовнішня дія sqlite_mavka_extension_prepare_v2(db: адреса, sql: адреса<char>, sql_size: size_t): адреса;
-зовнішня дія sqlite_mavka_extension_bind_double(stmt: адреса, i: int, value: double): int;
-зовнішня дія sqlite_mavka_extension_bind_int(stmt: адреса, i: int, value: int): int;
-зовнішня дія sqlite_mavka_extension_bind_int64(stmt: адреса, i: int, value: long): int;
-зовнішня дія sqlite_mavka_extension_bind_null(stmt: адреса, i: int): int;
-зовнішня дія sqlite_mavka_extension_bind_text(stmt: адреса, i: int, value: памʼять<char>, value_size: size_t): int;
-зовнішня дія sqlite_mavka_extension_expanded_sql(stmt: адреса, out: адреса<памʼять<п8>>): size_t;
-зовнішня дія sqlite_mavka_extension_step(stmt: адреса): int;
-зовнішня дія sqlite_mavka_extension_column_count(stmt: адреса): int;
-зовнішня дія sqlite_mavka_extension_column_type(stmt: адреса, i: int): int;
-зовнішня дія sqlite_mavka_extension_column_text(stmt: адреса, i: int, out: адреса<памʼять<char>>): size_t;
-зовнішня дія sqlite_mavka_extension_column_int(stmt: адреса, i: int): int;
-зовнішня дія sqlite_mavka_extension_column_double(stmt: адреса, i: int): double;
-зовнішня дія sqlite_mavka_extension_finalize(stmt: адреса): int;
+структура sqlite3;
+структура sqlite3_context;
+структура sqlite3_backup;
+структура sqlite3_stmt;
+структура sqlite3_value;
+структура sqlite3_blob;
+синонім SQLITE3_OK = 0;
+синонім sqlite3_int64 = ц64;
+синонім sqlite3_uint64 = п64;
+синонім sqlite3_callback = (data: адреса<SqliteExecCallbackData>, argc: int, argv: памʼять<памʼять<char>>, column_names: памʼять<памʼять<char>>) -> int;
 
-
-// треба втілити всі:
-// sqlite3_aggregate_context
-// sqlite3_aggregate_count (застаріло)
-// sqlite3_auto_extension
-// sqlite3_autovacuum_pages
-// sqlite3_backup_finish
-// sqlite3_backup_init
-// sqlite3_backup_pagecount
-// sqlite3_backup_remaining
-// sqlite3_backup_step
-// sqlite3_bind_blob
-// sqlite3_bind_blob64
-// sqlite3_bind_double
-// sqlite3_bind_int
-// sqlite3_bind_int64
-// sqlite3_bind_null
-// sqlite3_bind_parameter_count
-// sqlite3_bind_parameter_index
-// sqlite3_bind_parameter_name
-// sqlite3_bind_pointer
-// sqlite3_bind_text
-// sqlite3_bind_text16
-// sqlite3_bind_text64
-// sqlite3_bind_value
-// sqlite3_bind_zeroblob
-// sqlite3_bind_zeroblob64
-// sqlite3_blob_bytes
-// sqlite3_blob_close
-// sqlite3_blob_open
-// sqlite3_blob_read
-// sqlite3_blob_reopen
-// sqlite3_blob_write
-// sqlite3_busy_handler
-// sqlite3_busy_timeout
-// sqlite3_cancel_auto_extension
-// sqlite3_changes
-// sqlite3_changes64
-// sqlite3_clear_bindings
-// sqlite3_close
-// sqlite3_close_v2
-// sqlite3_collation_needed
-// sqlite3_collation_needed16
-// sqlite3_column_blob
-// sqlite3_column_bytes
-// sqlite3_column_bytes16
-// sqlite3_column_count
-// sqlite3_column_database_name
-// sqlite3_column_database_name16
-// sqlite3_column_decltype
-// sqlite3_column_decltype16
-// sqlite3_column_double
-// sqlite3_column_int
-// sqlite3_column_int64
-// sqlite3_column_name
-// sqlite3_column_name16
-// sqlite3_column_origin_name
-// sqlite3_column_origin_name16
-// sqlite3_column_table_name
-// sqlite3_column_table_name16
-// sqlite3_column_text
-// sqlite3_column_text16
-// sqlite3_column_type
-// sqlite3_column_value
-// sqlite3_commit_hook
-// sqlite3_compileoption_get
-// sqlite3_compileoption_used
-// sqlite3_complete
-// sqlite3_complete16
-// sqlite3_config
-// sqlite3_context_db_handle
-// sqlite3_create_collation
-// sqlite3_create_collation16
-// sqlite3_create_collation_v2
-// sqlite3_create_filename
-// sqlite3_create_function
-// sqlite3_create_function16
-// sqlite3_create_function_v2
-// sqlite3_create_module
-// sqlite3_create_module_v2
-// sqlite3_create_window_function
-// sqlite3_data_count
-// sqlite3_database_file_object
-// sqlite3_db_cacheflush
-// sqlite3_db_config
-// sqlite3_db_filename
-// sqlite3_db_handle
-// sqlite3_db_mutex
-// sqlite3_db_name
-// sqlite3_db_readonly
-// sqlite3_db_release_memory
-// sqlite3_db_status
-// sqlite3_declare_vtab
-// sqlite3_deserialize
-// sqlite3_drop_modules
-// sqlite3_enable_load_extension
-// sqlite3_enable_shared_cache
-// sqlite3_errcode
-// sqlite3_errmsg
-// sqlite3_errmsg16
-// sqlite3_error_offset
-// sqlite3_errstr
-// sqlite3_exec
-// sqlite3_expanded_sql
-// sqlite3_expired (застаріло)
-// sqlite3_extended_errcode
-// sqlite3_extended_result_codes
-// sqlite3_file_control
-// sqlite3_filename_database
-// sqlite3_filename_journal
-// sqlite3_filename_wal
-// sqlite3_finalize
-// sqlite3_free
-// sqlite3_free_filename
-// sqlite3_free_table
-// sqlite3_get_autocommit
-// sqlite3_get_auxdata
-// sqlite3_get_clientdata
-// sqlite3_get_table
-// sqlite3_global_recover (застаріло)
-// sqlite3_hard_heap_limit64
-// sqlite3_initialize
-// sqlite3_interrupt
-// sqlite3_is_interrupted
-// sqlite3_keyword_check
-// sqlite3_keyword_count
-// sqlite3_keyword_name
-// sqlite3_last_insert_rowid
-// sqlite3_libversion
-// sqlite3_libversion_number
-// sqlite3_limit
-// sqlite3_load_extension
-// sqlite3_log
-// sqlite3_malloc
-// sqlite3_malloc64
-// sqlite3_memory_alarm (застаріло)
-// sqlite3_memory_highwater
-// sqlite3_memory_used
-// sqlite3_mprintf
-// sqlite3_msize
-// sqlite3_mutex_alloc
-// sqlite3_mutex_enter
-// sqlite3_mutex_free
-// sqlite3_mutex_held
-// sqlite3_mutex_leave
-// sqlite3_mutex_notheld
-// sqlite3_mutex_try
-// sqlite3_next_stmt
-// sqlite3_normalized_sql
-// sqlite3_open
-// sqlite3_open16
-// sqlite3_open_v2
-// sqlite3_os_end
-// sqlite3_os_init
-// sqlite3_overload_function
-// sqlite3_prepare
-// sqlite3_prepare16
-// sqlite3_prepare16_v2
-// sqlite3_prepare16_v3
-// sqlite3_prepare_v2
-// sqlite3_prepare_v3
-// sqlite3_preupdate_blobwrite
-// sqlite3_preupdate_count
-// sqlite3_preupdate_depth
-// sqlite3_preupdate_hook
-// sqlite3_preupdate_new
-// sqlite3_preupdate_old
-// sqlite3_profile (застаріло)
-// sqlite3_progress_handler
-// sqlite3_randomness
-// sqlite3_realloc
-// sqlite3_realloc64
-// sqlite3_release_memory
-// sqlite3_reset
-// sqlite3_reset_auto_extension
-// sqlite3_result_blob
-// sqlite3_result_blob64
-// sqlite3_result_double
-// sqlite3_result_error
-// sqlite3_result_error16
-// sqlite3_result_error_code
-// sqlite3_result_error_nomem
-// sqlite3_result_error_toobig
-// sqlite3_result_int
-// sqlite3_result_int64
-// sqlite3_result_null
-// sqlite3_result_pointer
-// sqlite3_result_subtype
-// sqlite3_result_text
-// sqlite3_result_text16
-// sqlite3_result_text16be
-// sqlite3_result_text16le
-// sqlite3_result_text64
-// sqlite3_result_value
-// sqlite3_result_zeroblob
-// sqlite3_result_zeroblob64
-// sqlite3_rollback_hook
-// sqlite3_serialize
-// sqlite3_set_authorizer
-// sqlite3_set_auxdata
-// sqlite3_set_clientdata
-// sqlite3_set_last_insert_rowid
-// sqlite3_shutdown
-// sqlite3_sleep
-// sqlite3_snapshot_cmp
-// sqlite3_snapshot_free
-// sqlite3_snapshot_get
-// sqlite3_snapshot_open
-// sqlite3_snapshot_recover
-// sqlite3_snprintf
-// sqlite3_soft_heap_limit (застаріло)
-// sqlite3_soft_heap_limit64
-// sqlite3_sourceid
-// sqlite3_sql
-// sqlite3_status
-// sqlite3_status64
-// sqlite3_step
-// sqlite3_stmt_busy
-// sqlite3_stmt_explain
-// sqlite3_stmt_isexplain
-// sqlite3_stmt_readonly
-// sqlite3_stmt_scanstatus
-// sqlite3_stmt_scanstatus_reset
-// sqlite3_stmt_scanstatus_v2
-// sqlite3_stmt_status
-// sqlite3_str_append
-// sqlite3_str_appendall
-// sqlite3_str_appendchar
-// sqlite3_str_appendf
-// sqlite3_str_errcode
-// sqlite3_str_finish
-// sqlite3_str_length
-// sqlite3_str_new
-// sqlite3_str_reset
-// sqlite3_str_value
-// sqlite3_str_vappendf
-// sqlite3_strglob
-// sqlite3_stricmp
-// sqlite3_strlike
-// sqlite3_strnicmp
-// sqlite3_system_errno
-// sqlite3_table_column_metadata
-// sqlite3_test_control
-// sqlite3_thread_cleanup (застаріло)
-// sqlite3_threadsafe
-// sqlite3_total_changes
-// sqlite3_total_changes64
-// sqlite3_trace
-// sqlite3_trace_v2
-// sqlite3_transfer_bindings (застаріло)
-// sqlite3_txn_state
-// sqlite3_unlock_notify
-// sqlite3_update_hook
-// sqlite3_uri_boolean
-// sqlite3_uri_int64
-// sqlite3_uri_key
-// sqlite3_uri_parameter
-// sqlite3_user_data
-// sqlite3_value_blob
-// sqlite3_value_bytes
-// sqlite3_value_bytes16
-// sqlite3_value_double
-// sqlite3_value_dup
-// sqlite3_value_encoding
-// sqlite3_value_free
-// sqlite3_value_frombind
-// sqlite3_value_int
-// sqlite3_value_int64
-// sqlite3_value_nochange
-// sqlite3_value_numeric_type
-// sqlite3_value_pointer
-// sqlite3_value_subtype
-// sqlite3_value_text
-// sqlite3_value_text16
-// sqlite3_value_text16be
-// sqlite3_value_text16le
-// sqlite3_value_type
-// sqlite3_version
-// sqlite3_vfs_find
-// sqlite3_vfs_register
-// sqlite3_vfs_unregister
-// sqlite3_vmprintf
-// sqlite3_vsnprintf
-// sqlite3_vtab_collation
-// sqlite3_vtab_config
-// sqlite3_vtab_distinct
-// sqlite3_vtab_in
-// sqlite3_vtab_in_first
-// sqlite3_vtab_in_next
-// sqlite3_vtab_nochange
-// sqlite3_vtab_on_conflict
-// sqlite3_vtab_rhs_value
-// sqlite3_wal_autocheckpoint
-// sqlite3_wal_checkpoint
-// sqlite3_wal_checkpoint_v2
-// sqlite3_wal_hook
-// sqlite3_win32_set_directory
-// sqlite3_win32_set_directory16
-// sqlite3_win32_set_directory8
+зовнішня дія sqlite3_aggregate_context(p: адреса<sqlite3_context>, nBytes: int);
+зовнішня дія sqlite3_auto_extension(xEntryPoint: () -> ніщо): int;
+зовнішня дія sqlite3_autovacuum_pages(db: адреса<sqlite3>, xCallback: (адреса, адреса, п32, п32, п32) -> unsigned_int, pArg: адреса, xDestructor: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_backup_finish(p: адреса<sqlite3_backup>): int;
+зовнішня дія sqlite3_backup_init(pDest: адреса<sqlite3>, zDestName: памʼять<char>, pSource: адреса<sqlite3>, zSourceName: памʼять<char>): адреса<sqlite3_backup>;
+зовнішня дія sqlite3_backup_pagecount(p: адреса<sqlite3_backup>): int;
+зовнішня дія sqlite3_backup_remaining(p: адреса<sqlite3_backup>): int;
+зовнішня дія sqlite3_backup_step(p: адреса<sqlite3_backup>, nPage: int): int;
+зовнішня дія sqlite3_bind_blob(pStmt: адреса<sqlite3_stmt>, i: int, zData: адреса, nData: int, xDel: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_bind_blob64(pStmt: адреса<sqlite3_stmt>, i: int, zData: адреса, nData: sqlite3_uint64, xDel: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_bind_double(pStmt: адреса<sqlite3_stmt>, i: int, rValue: double): int;
+зовнішня дія sqlite3_bind_int(pStmt: адреса<sqlite3_stmt>, i: int, iValue: int): int;
+зовнішня дія sqlite3_bind_int64(pStmt: адреса<sqlite3_stmt>, i: int, iValue: sqlite3_int64): int;
+зовнішня дія sqlite3_bind_null(pStmt: адреса<sqlite3_stmt>, i: int): int;
+зовнішня дія sqlite3_bind_parameter_count(pStmt: адреса<sqlite3_stmt>): int;
+зовнішня дія sqlite3_bind_parameter_index(pStmt: адреса<sqlite3_stmt>, zName: памʼять<char>): int;
+зовнішня дія sqlite3_bind_parameter_name(pStmt: адреса<sqlite3_stmt>, i: int): памʼять<char>;
+зовнішня дія sqlite3_bind_pointer(pStmt: адреса<sqlite3_stmt>, i: int, pPtr: адреса, zPTtype: памʼять<char>, xDestructor: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_bind_text(pStmt: адреса<sqlite3_stmt>, i: int, zData: памʼять<char>, nData: int, xDel: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_bind_text16(pStmt: адреса<sqlite3_stmt>, i: int, zData: памʼять<char>, nData: int, xDel: (адреса) -> ніщо): int;
+зовнішня дія sqlite3_bind_text64(pStmt: адреса<sqlite3_stmt>, i: int, zData: памʼять<char>, nData: sqlite3_uint64, xDel: (адреса) -> ніщо, enc: unsigned_char): int;
+зовнішня дія sqlite3_bind_value(pStmt: адреса<sqlite3_stmt>, i: int, pValue: адреса<sqlite3_value>): int;
+зовнішня дія sqlite3_bind_zeroblob(pStmt: адреса<sqlite3_stmt>, i: int, n: int): int;
+зовнішня дія sqlite3_bind_zeroblob64(pStmt: адреса<sqlite3_stmt>, i: int, n: sqlite3_uint64): int;
+зовнішня дія sqlite3_blob_bytes(pBlob: адреса<sqlite3_blob>): int;
+зовнішня дія sqlite3_blob_close(pBlob: адреса<sqlite3_blob>): int;
+зовнішня дія sqlite3_blob_open(); // потім: втілити
+зовнішня дія sqlite3_blob_read(); // потім: втілити
+зовнішня дія sqlite3_blob_reopen(); // потім: втілити
+зовнішня дія sqlite3_blob_write(); // потім: втілити
+зовнішня дія sqlite3_busy_handler(); // потім: втілити
+зовнішня дія sqlite3_busy_timeout(); // потім: втілити
+зовнішня дія sqlite3_cancel_auto_extension(); // потім: втілити
+зовнішня дія sqlite3_changes(); // потім: втілити
+зовнішня дія sqlite3_changes64(); // потім: втілити
+зовнішня дія sqlite3_clear_bindings(); // потім: втілити
+зовнішня дія sqlite3_close(db: адреса<sqlite3>): int;
+зовнішня дія sqlite3_close_v2(db: адреса<sqlite3>): int;
+зовнішня дія sqlite3_collation_needed(); // потім: втілити
+зовнішня дія sqlite3_collation_needed16(); // потім: втілити
+зовнішня дія sqlite3_column_blob(); // потім: втілити
+зовнішня дія sqlite3_column_bytes(); // потім: втілити
+зовнішня дія sqlite3_column_bytes16(); // потім: втілити
+зовнішня дія sqlite3_column_count(); // потім: втілити
+зовнішня дія sqlite3_column_database_name(); // потім: втілити
+зовнішня дія sqlite3_column_database_name16(); // потім: втілити
+зовнішня дія sqlite3_column_decltype(); // потім: втілити
+зовнішня дія sqlite3_column_decltype16(); // потім: втілити
+зовнішня дія sqlite3_column_double(); // потім: втілити
+зовнішня дія sqlite3_column_int(); // потім: втілити
+зовнішня дія sqlite3_column_int64(); // потім: втілити
+зовнішня дія sqlite3_column_name(); // потім: втілити
+зовнішня дія sqlite3_column_name16(); // потім: втілити
+зовнішня дія sqlite3_column_origin_name(); // потім: втілити
+зовнішня дія sqlite3_column_origin_name16(); // потім: втілити
+зовнішня дія sqlite3_column_table_name(); // потім: втілити
+зовнішня дія sqlite3_column_table_name16(); // потім: втілити
+зовнішня дія sqlite3_column_text(); // потім: втілити
+зовнішня дія sqlite3_column_text16(); // потім: втілити
+зовнішня дія sqlite3_column_type(); // потім: втілити
+зовнішня дія sqlite3_column_value(); // потім: втілити
+зовнішня дія sqlite3_commit_hook(); // потім: втілити
+зовнішня дія sqlite3_compileoption_get(); // потім: втілити
+зовнішня дія sqlite3_compileoption_used(); // потім: втілити
+зовнішня дія sqlite3_complete(); // потім: втілити
+зовнішня дія sqlite3_complete16(); // потім: втілити
+зовнішня дія sqlite3_config(); // потім: втілити
+зовнішня дія sqlite3_context_db_handle(); // потім: втілити
+зовнішня дія sqlite3_create_collation(); // потім: втілити
+зовнішня дія sqlite3_create_collation16(); // потім: втілити
+зовнішня дія sqlite3_create_collation_v2(); // потім: втілити
+зовнішня дія sqlite3_create_filename(); // потім: втілити
+зовнішня дія sqlite3_create_function(); // потім: втілити
+зовнішня дія sqlite3_create_function16(); // потім: втілити
+зовнішня дія sqlite3_create_function_v2(); // потім: втілити
+зовнішня дія sqlite3_create_module(); // потім: втілити
+зовнішня дія sqlite3_create_module_v2(); // потім: втілити
+зовнішня дія sqlite3_create_window_function(); // потім: втілити
+зовнішня дія sqlite3_data_count(); // потім: втілити
+зовнішня дія sqlite3_database_file_object(); // потім: втілити
+зовнішня дія sqlite3_db_cacheflush(); // потім: втілити
+зовнішня дія sqlite3_db_config(); // потім: втілити
+зовнішня дія sqlite3_db_filename(); // потім: втілити
+зовнішня дія sqlite3_db_handle(); // потім: втілити
+зовнішня дія sqlite3_db_mutex(); // потім: втілити
+зовнішня дія sqlite3_db_name(); // потім: втілити
+зовнішня дія sqlite3_db_readonly(); // потім: втілити
+зовнішня дія sqlite3_db_release_memory(); // потім: втілити
+зовнішня дія sqlite3_db_status(); // потім: втілити
+зовнішня дія sqlite3_declare_vtab(); // потім: втілити
+зовнішня дія sqlite3_deserialize(); // потім: втілити
+зовнішня дія sqlite3_drop_modules(); // потім: втілити
+зовнішня дія sqlite3_enable_load_extension(); // потім: втілити
+зовнішня дія sqlite3_enable_shared_cache(); // потім: втілити
+зовнішня дія sqlite3_errcode(); // потім: втілити
+зовнішня дія sqlite3_errmsg(); // потім: втілити
+зовнішня дія sqlite3_errmsg16(); // потім: втілити
+зовнішня дія sqlite3_error_offset(); // потім: втілити
+зовнішня дія sqlite3_errstr(); // потім: втілити
+зовнішня дія sqlite3_exec(db: адреса<sqlite3>, zSql: памʼять<char>, xCallback: sqlite3_callback, pArg: адреса<SqliteExecCallbackData>, pzErrMsg: адреса<памʼять<char>>): int;
+зовнішня дія sqlite3_expanded_sql(pStmt: адреса<sqlite3_stmt>): памʼять<char>;
+зовнішня дія sqlite3_expired(); // потім: втілити
+зовнішня дія sqlite3_extended_errcode(); // потім: втілити
+зовнішня дія sqlite3_extended_result_codes(); // потім: втілити
+зовнішня дія sqlite3_file_control(); // потім: втілити
+зовнішня дія sqlite3_filename_database(); // потім: втілити
+зовнішня дія sqlite3_filename_journal(); // потім: втілити
+зовнішня дія sqlite3_filename_wal(); // потім: втілити
+зовнішня дія sqlite3_finalize(); // потім: втілити
+зовнішня дія sqlite3_free(); // потім: втілити
+зовнішня дія sqlite3_free_filename(); // потім: втілити
+зовнішня дія sqlite3_free_table(); // потім: втілити
+зовнішня дія sqlite3_get_autocommit(); // потім: втілити
+зовнішня дія sqlite3_get_auxdata(); // потім: втілити
+зовнішня дія sqlite3_get_clientdata(); // потім: втілити
+зовнішня дія sqlite3_get_table(); // потім: втілити
+зовнішня дія sqlite3_global_recover(); // потім: втілити
+зовнішня дія sqlite3_hard_heap_limit64(); // потім: втілити
+зовнішня дія sqlite3_initialize(); // потім: втілити
+зовнішня дія sqlite3_interrupt(); // потім: втілити
+зовнішня дія sqlite3_is_interrupted(); // потім: втілити
+зовнішня дія sqlite3_keyword_check(); // потім: втілити
+зовнішня дія sqlite3_keyword_count(); // потім: втілити
+зовнішня дія sqlite3_keyword_name(); // потім: втілити
+зовнішня дія sqlite3_last_insert_rowid(); // потім: втілити
+зовнішня дія sqlite3_libversion(); // потім: втілити
+зовнішня дія sqlite3_libversion_number(); // потім: втілити
+зовнішня дія sqlite3_limit(); // потім: втілити
+зовнішня дія sqlite3_load_extension(); // потім: втілити
+зовнішня дія sqlite3_log(); // потім: втілити
+зовнішня дія sqlite3_malloc(); // потім: втілити
+зовнішня дія sqlite3_malloc64(); // потім: втілити
+зовнішня дія sqlite3_memory_alarm(); // потім: втілити
+зовнішня дія sqlite3_memory_highwater(); // потім: втілити
+зовнішня дія sqlite3_memory_used(); // потім: втілити
+зовнішня дія sqlite3_mprintf(); // потім: втілити
+зовнішня дія sqlite3_msize(); // потім: втілити
+зовнішня дія sqlite3_mutex_alloc(); // потім: втілити
+зовнішня дія sqlite3_mutex_enter(); // потім: втілити
+зовнішня дія sqlite3_mutex_free(); // потім: втілити
+зовнішня дія sqlite3_mutex_held(); // потім: втілити
+зовнішня дія sqlite3_mutex_leave(); // потім: втілити
+зовнішня дія sqlite3_mutex_notheld(); // потім: втілити
+зовнішня дія sqlite3_mutex_try(); // потім: втілити
+зовнішня дія sqlite3_next_stmt(); // потім: втілити
+зовнішня дія sqlite3_normalized_sql(); // потім: втілити
+зовнішня дія sqlite3_open(zFilename: памʼять<char>, ppDb: адреса<адреса<sqlite3>>): int;
+зовнішня дія sqlite3_open16(); // потім: втілити
+зовнішня дія sqlite3_open_v2(zFilename: памʼять<char>, ppDb: адреса<адреса<sqlite3>>, flags: int, zVfs: памʼять<char>): int;
+зовнішня дія sqlite3_os_end(); // потім: втілити
+зовнішня дія sqlite3_os_init(); // потім: втілити
+зовнішня дія sqlite3_overload_function(); // потім: втілити
+зовнішня дія sqlite3_prepare(); // потім: втілити
+зовнішня дія sqlite3_prepare16(); // потім: втілити
+зовнішня дія sqlite3_prepare16_v2(); // потім: втілити
+зовнішня дія sqlite3_prepare16_v3(); // потім: втілити
+зовнішня дія sqlite3_prepare_v2(); // потім: втілити
+зовнішня дія sqlite3_prepare_v3(); // потім: втілити
+зовнішня дія sqlite3_preupdate_blobwrite(); // потім: втілити
+зовнішня дія sqlite3_preupdate_count(); // потім: втілити
+зовнішня дія sqlite3_preupdate_depth(); // потім: втілити
+зовнішня дія sqlite3_preupdate_hook(); // потім: втілити
+зовнішня дія sqlite3_preupdate_new(); // потім: втілити
+зовнішня дія sqlite3_preupdate_old(); // потім: втілити
+зовнішня дія sqlite3_profile(); // потім: втілити
+зовнішня дія sqlite3_progress_handler(); // потім: втілити
+зовнішня дія sqlite3_randomness(); // потім: втілити
+зовнішня дія sqlite3_realloc(); // потім: втілити
+зовнішня дія sqlite3_realloc64(); // потім: втілити
+зовнішня дія sqlite3_release_memory(); // потім: втілити
+зовнішня дія sqlite3_reset(); // потім: втілити
+зовнішня дія sqlite3_reset_auto_extension(); // потім: втілити
+зовнішня дія sqlite3_result_blob(); // потім: втілити
+зовнішня дія sqlite3_result_blob64(); // потім: втілити
+зовнішня дія sqlite3_result_double(); // потім: втілити
+зовнішня дія sqlite3_result_error(); // потім: втілити
+зовнішня дія sqlite3_result_error16(); // потім: втілити
+зовнішня дія sqlite3_result_error_code(); // потім: втілити
+зовнішня дія sqlite3_result_error_nomem(); // потім: втілити
+зовнішня дія sqlite3_result_error_toobig(); // потім: втілити
+зовнішня дія sqlite3_result_int(); // потім: втілити
+зовнішня дія sqlite3_result_int64(); // потім: втілити
+зовнішня дія sqlite3_result_null(); // потім: втілити
+зовнішня дія sqlite3_result_pointer(); // потім: втілити
+зовнішня дія sqlite3_result_subtype(); // потім: втілити
+зовнішня дія sqlite3_result_text(); // потім: втілити
+зовнішня дія sqlite3_result_text16(); // потім: втілити
+зовнішня дія sqlite3_result_text16be(); // потім: втілити
+зовнішня дія sqlite3_result_text16le(); // потім: втілити
+зовнішня дія sqlite3_result_text64(); // потім: втілити
+зовнішня дія sqlite3_result_value(); // потім: втілити
+зовнішня дія sqlite3_result_zeroblob(); // потім: втілити
+зовнішня дія sqlite3_result_zeroblob64(); // потім: втілити
+зовнішня дія sqlite3_rollback_hook(); // потім: втілити
+зовнішня дія sqlite3_serialize(); // потім: втілити
+зовнішня дія sqlite3_set_authorizer(); // потім: втілити
+зовнішня дія sqlite3_set_auxdata(); // потім: втілити
+зовнішня дія sqlite3_set_clientdata(); // потім: втілити
+зовнішня дія sqlite3_set_last_insert_rowid(); // потім: втілити
+зовнішня дія sqlite3_shutdown(); // потім: втілити
+зовнішня дія sqlite3_sleep(); // потім: втілити
+зовнішня дія sqlite3_snapshot_cmp(); // потім: втілити
+зовнішня дія sqlite3_snapshot_free(); // потім: втілити
+зовнішня дія sqlite3_snapshot_get(); // потім: втілити
+зовнішня дія sqlite3_snapshot_open(); // потім: втілити
+зовнішня дія sqlite3_snapshot_recover(); // потім: втілити
+зовнішня дія sqlite3_snprintf(); // потім: втілити
+зовнішня дія sqlite3_soft_heap_limit(); // потім: втілити
+зовнішня дія sqlite3_soft_heap_limit64(); // потім: втілити
+зовнішня дія sqlite3_sourceid(); // потім: втілити
+зовнішня дія sqlite3_sql(); // потім: втілити
+зовнішня дія sqlite3_status(); // потім: втілити
+зовнішня дія sqlite3_status64(); // потім: втілити
+зовнішня дія sqlite3_step(); // потім: втілити
+зовнішня дія sqlite3_stmt_busy(); // потім: втілити
+зовнішня дія sqlite3_stmt_explain(); // потім: втілити
+зовнішня дія sqlite3_stmt_isexplain(); // потім: втілити
+зовнішня дія sqlite3_stmt_readonly(); // потім: втілити
+зовнішня дія sqlite3_stmt_scanstatus(); // потім: втілити
+зовнішня дія sqlite3_stmt_scanstatus_reset(); // потім: втілити
+зовнішня дія sqlite3_stmt_scanstatus_v2(); // потім: втілити
+зовнішня дія sqlite3_stmt_status(); // потім: втілити
+зовнішня дія sqlite3_str_append(); // потім: втілити
+зовнішня дія sqlite3_str_appendall(); // потім: втілити
+зовнішня дія sqlite3_str_appendchar(); // потім: втілити
+зовнішня дія sqlite3_str_appendf(); // потім: втілити
+зовнішня дія sqlite3_str_errcode(); // потім: втілити
+зовнішня дія sqlite3_str_finish(); // потім: втілити
+зовнішня дія sqlite3_str_length(); // потім: втілити
+зовнішня дія sqlite3_str_new(); // потім: втілити
+зовнішня дія sqlite3_str_reset(); // потім: втілити
+зовнішня дія sqlite3_str_value(); // потім: втілити
+зовнішня дія sqlite3_str_vappendf(); // потім: втілити
+зовнішня дія sqlite3_strglob(); // потім: втілити
+зовнішня дія sqlite3_stricmp(); // потім: втілити
+зовнішня дія sqlite3_strlike(); // потім: втілити
+зовнішня дія sqlite3_strnicmp(); // потім: втілити
+зовнішня дія sqlite3_system_errno(); // потім: втілити
+зовнішня дія sqlite3_table_column_metadata(); // потім: втілити
+зовнішня дія sqlite3_test_control(); // потім: втілити
+зовнішня дія sqlite3_thread_cleanup(); // потім: втілити
+зовнішня дія sqlite3_threadsafe(); // потім: втілити
+зовнішня дія sqlite3_total_changes(); // потім: втілити
+зовнішня дія sqlite3_total_changes64(); // потім: втілити
+зовнішня дія sqlite3_trace(); // потім: втілити
+зовнішня дія sqlite3_trace_v2(); // потім: втілити
+зовнішня дія sqlite3_transfer_bindings(); // потім: втілити
+зовнішня дія sqlite3_txn_state(); // потім: втілити
+зовнішня дія sqlite3_unlock_notify(); // потім: втілити
+зовнішня дія sqlite3_update_hook(); // потім: втілити
+зовнішня дія sqlite3_uri_boolean(); // потім: втілити
+зовнішня дія sqlite3_uri_int64(); // потім: втілити
+зовнішня дія sqlite3_uri_key(); // потім: втілити
+зовнішня дія sqlite3_uri_parameter(); // потім: втілити
+зовнішня дія sqlite3_user_data(); // потім: втілити
+зовнішня дія sqlite3_value_blob(); // потім: втілити
+зовнішня дія sqlite3_value_bytes(); // потім: втілити
+зовнішня дія sqlite3_value_bytes16(); // потім: втілити
+зовнішня дія sqlite3_value_double(); // потім: втілити
+зовнішня дія sqlite3_value_dup(); // потім: втілити
+зовнішня дія sqlite3_value_encoding(); // потім: втілити
+зовнішня дія sqlite3_value_free(); // потім: втілити
+зовнішня дія sqlite3_value_frombind(); // потім: втілити
+зовнішня дія sqlite3_value_int(); // потім: втілити
+зовнішня дія sqlite3_value_int64(); // потім: втілити
+зовнішня дія sqlite3_value_nochange(); // потім: втілити
+зовнішня дія sqlite3_value_numeric_type(); // потім: втілити
+зовнішня дія sqlite3_value_pointer(); // потім: втілити
+зовнішня дія sqlite3_value_subtype(); // потім: втілити
+зовнішня дія sqlite3_value_text(); // потім: втілити
+зовнішня дія sqlite3_value_text16(); // потім: втілити
+зовнішня дія sqlite3_value_text16be(); // потім: втілити
+зовнішня дія sqlite3_value_text16le(); // потім: втілити
+зовнішня дія sqlite3_value_type(); // потім: втілити
+зовнішня дія sqlite3_version(); // потім: втілити
+зовнішня дія sqlite3_vfs_find(); // потім: втілити
+зовнішня дія sqlite3_vfs_register(); // потім: втілити
+зовнішня дія sqlite3_vfs_unregister(); // потім: втілити
+зовнішня дія sqlite3_vmprintf(); // потім: втілити
+зовнішня дія sqlite3_vsnprintf(); // потім: втілити
+зовнішня дія sqlite3_vtab_collation(); // потім: втілити
+зовнішня дія sqlite3_vtab_config(); // потім: втілити
+зовнішня дія sqlite3_vtab_distinct(); // потім: втілити
+зовнішня дія sqlite3_vtab_in(); // потім: втілити
+зовнішня дія sqlite3_vtab_in_first(); // потім: втілити
+зовнішня дія sqlite3_vtab_in_next(); // потім: втілити
+зовнішня дія sqlite3_vtab_nochange(); // потім: втілити
+зовнішня дія sqlite3_vtab_on_conflict(); // потім: втілити
+зовнішня дія sqlite3_vtab_rhs_value(); // потім: втілити
+зовнішня дія sqlite3_wal_autocheckpoint(); // потім: втілити
+зовнішня дія sqlite3_wal_checkpoint(); // потім: втілити
+зовнішня дія sqlite3_wal_checkpoint_v2(); // потім: втілити
+зовнішня дія sqlite3_wal_hook(); // потім: втілити
+зовнішня дія sqlite3_win32_set_directory(); // потім: втілити
+зовнішня дія sqlite3_win32_set_directory16(); // потім: втілити
+зовнішня дія sqlite3_win32_set_directory8(); // потім: втілити
 
 
 дія нативна_дія_open(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
@@ -348,36 +337,34 @@
   ціль розмір_шляху_Ю8 = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_шлях, Р, шлях_Ю8::адреса);
   ціль open_error: памʼять<char> = пусто;
   ціль open_error_size: size_t = 0;
-  ціль sqlite_db = sqlite_mavka_extension_open(шлях_Ю8 як адреса<char>, size_t(розмір_шляху_Ю8), open_error::адреса, open_error_size::адреса);
+  ціль sqlite_db: адреса<sqlite3> = пусто;
+  ціль status = sqlite3_open(шлях_Ю8 як памʼять<char>, sqlite_db::адреса);
   РМв1::звільнити(Р, шлях_Ю8 як адреса);
-  якщо open_error != пусто {
-    вернути РМв1::падіння(Р, РМв1::створити_юнікод_з_Ю8(Р, open_error як памʼять<п8>));
+  якщо status != SQLITE3_OK {
+    вернути РМв1::падіння(Р, РМв1::створити_юнікод_з_Ю8(Р, ю8"cannot open database"));
   }
   вернути РМв1::успіх(Р, РМв1::створити_адресу(Р, sqlite_db));
 }
 
-дія exec_callback(data: адреса<SqliteExecCallbackData>, argc: int, argv: памʼять<адреса<char>>, column_names: памʼять<адреса<char>>): int {
+дія exec_callback(data: адреса<SqliteExecCallbackData>, argc: int, argv: памʼять<памʼять<char>>, column_names: памʼять<памʼять<char>>): int {
   ціль Р = data.Р;
-  ціль обʼєкт_рядків = data.обʼєкт_рядків;
-  ціль рядок = РМв1::створити_словник(Р);
-  РМв1::зберегти_обʼєкт(Р, обʼєкт_рядків);
-  РМв1::зберегти_обʼєкт(Р, рядок);
-  змінна ціль п: int = 0;
-  поки п < argc {
-    змінна ціль ключ = РМв1::створити_юнікод_з_Ю8(Р, column_names[п] як памʼять<п8>);
-    змінна ціль значення = РМв1::створити_юнікод_з_Ю8(Р, argv[п] як памʼять<п8>);
-    РМв1::зберегти_обʼєкт(Р, ключ);
-    РМв1::зберегти_обʼєкт(Р, значення);
-    ціль результат_зміни_елемента = РМв1::обʼєкт_змінити_елемент(рядок, Р, ключ, значення);
-    РМв1::видалити_збережений_обʼєкт(Р);
-    РМв1::видалити_збережений_обʼєкт(Р);
-    п += 1;
+  якщо data.callback != пусто {
+    ціль обʼєкт_рядка = РМв1::створити_словник(Р);
+    змінна ціль п: int = 0;
+    поки п < argc {
+      ціль результат_зміни_елемента_обʼєкта_рядка = РМв1::обʼєкт_змінити_елемент(обʼєкт_рядка, Р, РМв1::створити_юнікод_з_Ю8(Р, argv[п] як памʼять<п8>), РМв1::створити_юнікод_з_Ю8(Р, column_names[п] як памʼять<п8>));
+      якщо результат_зміни_елемента_обʼєкта_рядка.падіння != пусто {
+        вернути 1;
+      }
+      п += 1;
+    }
+    ціль аргументи = РМв1::виділити<адреса<РМв1::Обʼєкт>>(Р, 1);
+    аргументи[0] = обʼєкт_рядка;
+    ціль результат_виконання_callback = РМв1::обʼєкт_виконати(data.callback, Р, пусто, 1, аргументи, пусто);
+    якщо результат_виконання_callback.падіння != пусто {
+      вернути 1;
+    }
   }
-  ціль результат_отримання_довжини = РМв1::обʼєкт_отримати_властивість(обʼєкт_рядків, Р, РМв1::назва_з_Ю8(Р, ю8"довжина"));
-  ціль довжина_д64 = РМв1::отримати_значення_числа(результат_отримання_довжини.значення, Р);
-  ціль результат_зміни_елемента = РМв1::обʼєкт_змінити_елемент(обʼєкт_рядків, Р, РМв1::створити_число(Р, довжина_д64), рядок);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
   вернути 0;
 }
 
@@ -386,9 +373,12 @@
   змінна ціль аргумент_db: адреса<РМв1::Обʼєкт> = пусто;
   змінна ціль знайдено_аргумент_sql = ні;
   змінна ціль аргумент_sql: адреса<РМв1::Обʼєкт> = пусто;
+  змінна ціль знайдено_аргумент_callback = ні;
+  змінна ціль аргумент_callback: адреса<РМв1::Обʼєкт> = пусто;
   якщо іменовані_аргументи != пусто {
     знайдено_аргумент_db = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"db"), аргумент_db::адреса);
     знайдено_аргумент_sql = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"sql"), аргумент_sql::адреса);
+    знайдено_аргумент_callback = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"callback"), аргумент_callback::адреса);
   }
   якщо кількість_аргументів > 0 {
     якщо знайдено_аргумент_db == ні {
@@ -400,403 +390,420 @@
         знайдено_аргумент_sql = так;
         аргумент_sql = аргументи[1];
       }
+      якщо кількість_аргументів > 2 {
+        якщо знайдено_аргумент_callback == ні {
+          знайдено_аргумент_callback = так;
+          аргумент_callback = аргументи[2];
+        }
+      }
     }
   }
   якщо знайдено_аргумент_db == ні {
     вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"db\""));
   }
-  якщо знайдено_аргумент_sql == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"sql\""));
-  }
   якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_db, Р) == ні {
     вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"db\" має бути адресою"));
+  }
+  якщо знайдено_аргумент_sql == ні {
+    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"sql\""));
   }
   якщо РМв1::перевірити_чи_обʼєкт_є_юнікодом(аргумент_sql, Р) == ні {
     вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"sql\" має бути юнікодом"));
   }
+  якщо знайдено_аргумент_callback == так {
+    якщо РМв1::перевірити_чи_обʼєкт_є_дією(аргумент_callback, Р) == ні {
+      вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"callback\" має бути дією"));
+    }
+  }
   РМв1::зберегти_обʼєкт(Р, аргумент_db);
   РМв1::зберегти_обʼєкт(Р, аргумент_sql);
-  ціль db = РМв1::отримати_значення_адреси(аргумент_db, Р);
+  РМв1::зберегти_обʼєкт(Р, аргумент_callback);
+  ціль db = РМв1::отримати_значення_адреси(аргумент_db, Р) як адреса<sqlite3>;
   ціль sql: памʼять<п8> = пусто;
   ціль sql_size = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_sql, Р, sql::адреса);
   змінна ціль error: памʼять<п8> = пусто;
-  змінна ціль error_size: size_t = 0;
-  ціль обʼєкт_рядків = РМв1::створити_список(Р);
   ціль data = РМв1::виділити<SqliteExecCallbackData>(Р);
   data.Р = Р;
-  data.обʼєкт_рядків = обʼєкт_рядків;
-  ціль success = sqlite_mavka_extension_exec(db, sql як адреса<char>, size_t(sql_size), exec_callback, data, error::адреса як адреса<адреса<char>>, error_size::адреса);
+  data.callback = аргумент_callback;
+  ціль status = sqlite3_exec(
+    db,
+    sql як памʼять<char>,
+    exec_callback,
+    data,
+    error::адреса як адреса<памʼять<char>>
+  );
   РМв1::звільнити(Р, sql як адреса);
   РМв1::звільнити(Р, data як адреса);
   РМв1::видалити_збережений_обʼєкт(Р);
   РМв1::видалити_збережений_обʼєкт(Р);
-  якщо success == 0 {
+  РМв1::видалити_збережений_обʼєкт(Р);
+  якщо status != SQLITE3_OK {
     вернути РМв1::падіння(Р, РМв1::створити_юнікод_з_Ю8(Р, error));
   }
-  вернути РМв1::успіх(Р, обʼєкт_рядків);
+  вернути РМв1::успіх(Р, РМв1::створити_число(Р, д64(status)));
 }
 
-дія нативна_дія_prepare_v2(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_db = ні;
-  змінна ціль аргумент_db: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_sql = ні;
-  змінна ціль аргумент_sql: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_db = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"db"), аргумент_db::адреса);
-    знайдено_аргумент_sql = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"sql"), аргумент_sql::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_db == ні {
-      знайдено_аргумент_db = так;
-      аргумент_db = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_sql == ні {
-        знайдено_аргумент_sql = так;
-        аргумент_sql = аргументи[1];
-      }
-    }
-  }
-  якщо знайдено_аргумент_db == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"db\""));
-  }
-  якщо знайдено_аргумент_sql == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"sql\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_db, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"db\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_юнікодом(аргумент_sql, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"sql\" має бути юнікодом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_db);
-  РМв1::зберегти_обʼєкт(Р, аргумент_sql);
-  ціль db = РМв1::отримати_значення_адреси(аргумент_db, Р);
-  ціль sql: памʼять<п8> = пусто;
-  ціль sql_size = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_sql, Р, sql::адреса);
-  ціль prepared_stmt = sqlite_mavka_extension_prepare_v2(db, sql як адреса<char>, size_t(sql_size));
-  РМв1::звільнити(Р, sql як адреса);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  якщо prepared_stmt == пусто {
-    вернути РМв1::падіння(Р, РМв1::створити_юнікод_з_Ю8(Р, ю8"cannot prepare stmt"));
-  }
-  вернути РМв1::успіх(Р, РМв1::створити_адресу(Р, prepared_stmt));
-}
-
-дія нативна_дія_bind_double(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_i = ні;
-  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_value = ні;
-  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
-    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_i == ні {
-        знайдено_аргумент_i = так;
-        аргумент_i = аргументи[1];
-      }
-      якщо кількість_аргументів > 2 {
-        якщо знайдено_аргумент_value == ні {
-          знайдено_аргумент_value = так;
-          аргумент_value = аргументи[2];
-        }
-      }
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо знайдено_аргумент_i == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
-  }
-  якщо знайдено_аргумент_value == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  РМв1::зберегти_обʼєкт(Р, аргумент_i);
-  РМв1::зберегти_обʼєкт(Р, аргумент_value);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
-  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
-  sqlite_mavka_extension_bind_double(stmt, int(i_значення_числа), double(value_значення_числа));
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  вернути РМв1::успіх(Р, пусто);
-}
-
-дія нативна_дія_bind_int(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_i = ні;
-  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_value = ні;
-  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
-    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_i == ні {
-        знайдено_аргумент_i = так;
-        аргумент_i = аргументи[1];
-      }
-      якщо кількість_аргументів > 2 {
-        якщо знайдено_аргумент_value == ні {
-          знайдено_аргумент_value = так;
-          аргумент_value = аргументи[2];
-        }
-      }
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо знайдено_аргумент_i == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
-  }
-  якщо знайдено_аргумент_value == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  РМв1::зберегти_обʼєкт(Р, аргумент_i);
-  РМв1::зберегти_обʼєкт(Р, аргумент_value);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
-  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
-  sqlite_mavka_extension_bind_int(stmt, int(i_значення_числа), int(value_значення_числа));
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  вернути РМв1::успіх(Р, пусто);
-}
-
-дія нативна_дія_bind_int64(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_i = ні;
-  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_value = ні;
-  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
-    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_i == ні {
-        знайдено_аргумент_i = так;
-        аргумент_i = аргументи[1];
-      }
-      якщо кількість_аргументів > 2 {
-        якщо знайдено_аргумент_value == ні {
-          знайдено_аргумент_value = так;
-          аргумент_value = аргументи[2];
-        }
-      }
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо знайдено_аргумент_i == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
-  }
-  якщо знайдено_аргумент_value == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  РМв1::зберегти_обʼєкт(Р, аргумент_i);
-  РМв1::зберегти_обʼєкт(Р, аргумент_value);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
-  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
-  sqlite_mavka_extension_bind_int64(stmt, int(i_значення_числа), long(value_значення_числа));
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  вернути РМв1::успіх(Р, пусто);
-}
-
-дія нативна_дія_bind_null(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_i = ні;
-  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_i == ні {
-        знайдено_аргумент_i = так;
-        аргумент_i = аргументи[1];
-      }
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо знайдено_аргумент_i == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  РМв1::зберегти_обʼєкт(Р, аргумент_i);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
-  sqlite_mavka_extension_bind_null(stmt, int(i_значення_числа));
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  вернути РМв1::успіх(Р, пусто);
-}
-
-дія нативна_дія_bind_text(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_i = ні;
-  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
-  змінна ціль знайдено_аргумент_value = ні;
-  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
-    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-    якщо кількість_аргументів > 1 {
-      якщо знайдено_аргумент_i == ні {
-        знайдено_аргумент_i = так;
-        аргумент_i = аргументи[1];
-      }
-      якщо кількість_аргументів > 2 {
-        якщо знайдено_аргумент_value == ні {
-          знайдено_аргумент_value = так;
-          аргумент_value = аргументи[2];
-        }
-      }
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо знайдено_аргумент_i == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
-  }
-  якщо знайдено_аргумент_value == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_юнікодом(аргумент_value, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути юнікодом"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  РМв1::зберегти_обʼєкт(Р, аргумент_i);
-  РМв1::зберегти_обʼєкт(Р, аргумент_value);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
-  ціль value_значення_юнікоду: памʼять<п8> = пусто;
-  ціль value_значення_юнікоду_size = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_value, Р, value_значення_юнікоду::адреса);
-  sqlite_mavka_extension_bind_text(stmt, int(i_значення_числа), value_значення_юнікоду як памʼять<char>, size_t(value_значення_юнікоду_size));
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  вернути РМв1::успіх(Р, пусто);
-}
-
-дія нативна_дія_expanded_sql(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
-  змінна ціль знайдено_аргумент_stmt = ні;
-  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
-  якщо іменовані_аргументи != пусто {
-    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
-  }
-  якщо кількість_аргументів > 0 {
-    якщо знайдено_аргумент_stmt == ні {
-      знайдено_аргумент_stmt = так;
-      аргумент_stmt = аргументи[0];
-    }
-  }
-  якщо знайдено_аргумент_stmt == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
-  }
-  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
-    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
-  }
-  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
-  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
-  РМв1::видалити_збережений_обʼєкт(Р);
-  ціль expanded_sql: памʼять<п8> = пусто;
-  ціль розмір_expanded_sql = sqlite_mavka_extension_expanded_sql(stmt, expanded_sql::адреса);
-  вернути РМв1::успіх(Р, РМв1::створити_юнікод_з_Ю8(Р, expanded_sql));
-}
+//дія нативна_дія_prepare_v2(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_db = ні;
+//  змінна ціль аргумент_db: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_sql = ні;
+//  змінна ціль аргумент_sql: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_db = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"db"), аргумент_db::адреса);
+//    знайдено_аргумент_sql = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"sql"), аргумент_sql::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_db == ні {
+//      знайдено_аргумент_db = так;
+//      аргумент_db = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_sql == ні {
+//        знайдено_аргумент_sql = так;
+//        аргумент_sql = аргументи[1];
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_db == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"db\""));
+//  }
+//  якщо знайдено_аргумент_sql == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"sql\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_db, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"db\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_юнікодом(аргумент_sql, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"sql\" має бути юнікодом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_db);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_sql);
+//  ціль db = РМв1::отримати_значення_адреси(аргумент_db, Р);
+//  ціль sql: памʼять<п8> = пусто;
+//  ціль sql_size = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_sql, Р, sql::адреса);
+//  ціль prepared_stmt = sqlite_mavka_extension_prepare_v2(db, sql як адреса<char>, size_t(sql_size));
+//  РМв1::звільнити(Р, sql як адреса);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  якщо prepared_stmt == пусто {
+//    вернути РМв1::падіння(Р, РМв1::створити_юнікод_з_Ю8(Р, ю8"cannot prepare stmt"));
+//  }
+//  вернути РМв1::успіх(Р, РМв1::створити_адресу(Р, prepared_stmt));
+//}
+//
+//дія нативна_дія_bind_double(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_i = ні;
+//  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_value = ні;
+//  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
+//    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_i == ні {
+//        знайдено_аргумент_i = так;
+//        аргумент_i = аргументи[1];
+//      }
+//      якщо кількість_аргументів > 2 {
+//        якщо знайдено_аргумент_value == ні {
+//          знайдено_аргумент_value = так;
+//          аргумент_value = аргументи[2];
+//        }
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо знайдено_аргумент_i == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
+//  }
+//  якщо знайдено_аргумент_value == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_i);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_value);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
+//  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
+//  sqlite_mavka_extension_bind_double(stmt, int(i_значення_числа), double(value_значення_числа));
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  вернути РМв1::успіх(Р, пусто);
+//}
+//
+//дія нативна_дія_bind_int(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_i = ні;
+//  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_value = ні;
+//  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
+//    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_i == ні {
+//        знайдено_аргумент_i = так;
+//        аргумент_i = аргументи[1];
+//      }
+//      якщо кількість_аргументів > 2 {
+//        якщо знайдено_аргумент_value == ні {
+//          знайдено_аргумент_value = так;
+//          аргумент_value = аргументи[2];
+//        }
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо знайдено_аргумент_i == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
+//  }
+//  якщо знайдено_аргумент_value == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_i);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_value);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
+//  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
+//  sqlite_mavka_extension_bind_int(stmt, int(i_значення_числа), int(value_значення_числа));
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  вернути РМв1::успіх(Р, пусто);
+//}
+//
+//дія нативна_дія_bind_int64(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_i = ні;
+//  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_value = ні;
+//  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
+//    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_i == ні {
+//        знайдено_аргумент_i = так;
+//        аргумент_i = аргументи[1];
+//      }
+//      якщо кількість_аргументів > 2 {
+//        якщо знайдено_аргумент_value == ні {
+//          знайдено_аргумент_value = так;
+//          аргумент_value = аргументи[2];
+//        }
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо знайдено_аргумент_i == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
+//  }
+//  якщо знайдено_аргумент_value == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_value, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути числом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_i);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_value);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
+//  ціль value_значення_числа = РМв1::отримати_значення_числа(аргумент_value, Р);
+//  sqlite_mavka_extension_bind_int64(stmt, int(i_значення_числа), long(value_значення_числа));
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  вернути РМв1::успіх(Р, пусто);
+//}
+//
+//дія нативна_дія_bind_null(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_i = ні;
+//  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_i == ні {
+//        знайдено_аргумент_i = так;
+//        аргумент_i = аргументи[1];
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо знайдено_аргумент_i == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_i);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
+//  sqlite_mavka_extension_bind_null(stmt, int(i_значення_числа));
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  вернути РМв1::успіх(Р, пусто);
+//}
+//
+//дія нативна_дія_bind_text(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_i = ні;
+//  змінна ціль аргумент_i: адреса<РМв1::Обʼєкт> = пусто;
+//  змінна ціль знайдено_аргумент_value = ні;
+//  змінна ціль аргумент_value: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//    знайдено_аргумент_i = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"i"), аргумент_i::адреса);
+//    знайдено_аргумент_value = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"value"), аргумент_value::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//    якщо кількість_аргументів > 1 {
+//      якщо знайдено_аргумент_i == ні {
+//        знайдено_аргумент_i = так;
+//        аргумент_i = аргументи[1];
+//      }
+//      якщо кількість_аргументів > 2 {
+//        якщо знайдено_аргумент_value == ні {
+//          знайдено_аргумент_value = так;
+//          аргумент_value = аргументи[2];
+//        }
+//      }
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо знайдено_аргумент_i == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"i\""));
+//  }
+//  якщо знайдено_аргумент_value == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"value\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_числом(аргумент_i, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"i\" має бути числом"));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_юнікодом(аргумент_value, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"value\" має бути юнікодом"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_i);
+//  РМв1::зберегти_обʼєкт(Р, аргумент_value);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  ціль i_значення_числа = РМв1::отримати_значення_числа(аргумент_i, Р);
+//  ціль value_значення_юнікоду: памʼять<п8> = пусто;
+//  ціль value_значення_юнікоду_size = РМв1::отримати_копію_даних_юнікоду_як_Ю8(аргумент_value, Р, value_значення_юнікоду::адреса);
+//  sqlite_mavka_extension_bind_text(stmt, int(i_значення_числа), value_значення_юнікоду як памʼять<char>, size_t(value_значення_юнікоду_size));
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  вернути РМв1::успіх(Р, пусто);
+//}
+//
+//дія нативна_дія_expanded_sql(обʼєкт_нативної_дії: адреса<РМв1::Обʼєкт>, Р: адреса<РМв1::Розширення>, обʼєкт_я: адреса<РМв1::Обʼєкт>, кількість_аргументів: позитивне, аргументи: памʼять<адреса<РМв1::Обʼєкт>>, іменовані_аргументи: адреса<РМв1::ІменованіАргументи>, дані: адреса): РМв1::Результат {
+//  змінна ціль знайдено_аргумент_stmt = ні;
+//  змінна ціль аргумент_stmt: адреса<РМв1::Обʼєкт> = пусто;
+//  якщо іменовані_аргументи != пусто {
+//    знайдено_аргумент_stmt = РМв1::знайти_іменований_аргумент(Р, іменовані_аргументи, РМв1::назва_з_Ю8(Р, ю8"stmt"), аргумент_stmt::адреса);
+//  }
+//  якщо кількість_аргументів > 0 {
+//    якщо знайдено_аргумент_stmt == ні {
+//      знайдено_аргумент_stmt = так;
+//      аргумент_stmt = аргументи[0];
+//    }
+//  }
+//  якщо знайдено_аргумент_stmt == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Пропущено аргумент \"stmt\""));
+//  }
+//  якщо РМв1::перевірити_чи_обʼєкт_є_адресою(аргумент_stmt, Р) == ні {
+//    вернути РМв1::падіння(Р, РМв1::створити_текст_з_Ю8(Р, ю8"Аргумент \"stmt\" має бути адресою"));
+//  }
+//  РМв1::зберегти_обʼєкт(Р, аргумент_stmt);
+//  ціль stmt = РМв1::отримати_значення_адреси(аргумент_stmt, Р);
+//  РМв1::видалити_збережений_обʼєкт(Р);
+//  ціль expanded_sql: памʼять<п8> = пусто;
+//  ціль розмір_expanded_sql = sqlite_mavka_extension_expanded_sql(stmt, expanded_sql::адреса);
+//  вернути РМв1::успіх(Р, РМв1::створити_юнікод_з_Ю8(Р, expanded_sql));
+//}
 
 зовнішня дія завантажити_РМв1(Р: адреса<РМв1::Розширення>): РМв1::Результат {
   ціль обʼєкт_модуля_sqlite3 = РМв1::створити_модуль(Р, РМв1::назва_з_Ю8(Р, ю8"sqlite3"));
@@ -805,20 +812,20 @@
   РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"open"), обʼєкт_нативної_дії_open);
   ціль обʼєкт_нативної_дії_exec = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"exec"), нативна_дія_exec, пусто, пусто);
   РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"exec"), обʼєкт_нативної_дії_exec);
-  ціль обʼєкт_нативної_дії_prepare_v2 = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"prepare_v2"), нативна_дія_prepare_v2, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"prepare_v2"), обʼєкт_нативної_дії_prepare_v2);
-  ціль обʼєкт_нативної_дії_bind_double = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_double"), нативна_дія_bind_double, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_double"), обʼєкт_нативної_дії_bind_double);
-  ціль обʼєкт_нативної_дії_bind_int = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_int"), нативна_дія_bind_int, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_int"), обʼєкт_нативної_дії_bind_int);
-  ціль обʼєкт_нативної_дії_bind_int64 = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_int64"), нативна_дія_bind_int64, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_int64"), обʼєкт_нативної_дії_bind_int64);
-  ціль обʼєкт_нативної_дії_bind_null = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_null"), нативна_дія_bind_null, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_null"), обʼєкт_нативної_дії_bind_null);
-  ціль обʼєкт_нативної_дії_bind_text = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_text"), нативна_дія_bind_text, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_text"), обʼєкт_нативної_дії_bind_text);
-  ціль обʼєкт_нативної_дії_expanded_sql = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"expanded_sql"), нативна_дія_expanded_sql, пусто, пусто);
-  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"expanded_sql"), обʼєкт_нативної_дії_expanded_sql);
+//  ціль обʼєкт_нативної_дії_prepare_v2 = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"prepare_v2"), нативна_дія_prepare_v2, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"prepare_v2"), обʼєкт_нативної_дії_prepare_v2);
+//  ціль обʼєкт_нативної_дії_bind_double = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_double"), нативна_дія_bind_double, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_double"), обʼєкт_нативної_дії_bind_double);
+//  ціль обʼєкт_нативної_дії_bind_int = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_int"), нативна_дія_bind_int, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_int"), обʼєкт_нативної_дії_bind_int);
+//  ціль обʼєкт_нативної_дії_bind_int64 = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_int64"), нативна_дія_bind_int64, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_int64"), обʼєкт_нативної_дії_bind_int64);
+//  ціль обʼєкт_нативної_дії_bind_null = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_null"), нативна_дія_bind_null, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_null"), обʼєкт_нативної_дії_bind_null);
+//  ціль обʼєкт_нативної_дії_bind_text = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"bind_text"), нативна_дія_bind_text, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"bind_text"), обʼєкт_нативної_дії_bind_text);
+//  ціль обʼєкт_нативної_дії_expanded_sql = РМв1::створити_нативну_дію(Р, РМв1::назва_з_Ю8(Р, ю8"expanded_sql"), нативна_дія_expanded_sql, пусто, пусто);
+//  РМв1::обʼєкт_змінити_властивість(обʼєкт_модуля_sqlite3, Р, РМв1::назва_з_Ю8(Р, ю8"expanded_sql"), обʼєкт_нативної_дії_expanded_sql);
   РМв1::видалити_збережений_обʼєкт(Р);
   вернути РМв1::успіх(Р, обʼєкт_модуля_sqlite3);
 }
